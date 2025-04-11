@@ -35,7 +35,7 @@
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 15px;
             height: 100%;
             display: flex;
             flex-direction: column;
@@ -43,34 +43,34 @@
 
         header {
             text-align: center;
-            margin-bottom: 15px;
-            padding: 10px 0;
+            margin-bottom: 10px;
+            padding: 5px 0;
         }
 
         h1 {
             color: var(--primary);
-            margin-bottom: 5px;
-            font-size: 2rem;
+            margin-bottom: 3px;
+            font-size: 1.5rem;
         }
 
         .ai-selector {
             display: flex;
             justify-content: center;
-            gap: 12px;
-            margin-bottom: 15px;
+            gap: 8px;
+            margin-bottom: 10px;
             flex-wrap: wrap;
         }
 
         .ai-btn {
-            padding: 8px 16px;
+            padding: 6px 12px;
             background-color: var(--light);
             border: 2px solid var(--primary);
-            border-radius: 30px;
+            border-radius: 20px;
             color: var(--primary);
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
         .ai-btn:hover {
@@ -85,26 +85,25 @@
 
         .status-btn {
             position: absolute;
-            right: 20px;
-            top: 20px;
-            padding: 6px 12px;
-            background-color: var(--light);
-            border: 2px solid var(--gray);
-            border-radius: 30px;
+            right: 15px;
+            top: 15px;
+            padding: 4px 8px;
+            border: 1px solid var(--gray);
+            border-radius: 20px;
             color: var(--dark);
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
+            background-color: var(--light);
         }
 
         .status-btn::before {
             content: "";
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
             background-color: var(--gray);
         }
@@ -124,8 +123,8 @@
         .chat-wrapper {
             display: flex;
             flex: 1;
-            gap: 20px;
-            height: calc(100% - 150px);
+            gap: 10px;
+            height: calc(100% - 100px);
         }
 
         .chat-container {
@@ -133,41 +132,43 @@
             flex-direction: column;
             flex: 1;
             background-color: var(--light);
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             position: relative;
         }
 
         .chat-header {
-            padding: 12px 20px;
+            padding: 8px 15px;
             background-color: var(--primary);
             color: var(--light);
             font-weight: 600;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            font-size: 0.9rem;
         }
 
         .chat-messages {
             flex: 1;
-            padding: 15px;
+            padding: 10px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 8px;
         }
 
         .message {
-            max-width: 80%;
-            padding: 10px 15px;
+            max-width: 85%;
+            padding: 8px 12px;
             border-radius: 12px;
             position: relative;
             animation: fadeIn 0.3s ease;
+            font-size: 0.9rem;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(5px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -175,72 +176,91 @@
             align-self: flex-end;
             background-color: var(--primary);
             color: var(--light);
-            border-bottom-right-radius: 5px;
+            border-bottom-right-radius: 3px;
         }
 
         .ai-message {
             align-self: flex-start;
             background-color: #f1f1f1;
-            border-bottom-left-radius: 5px;
+            border-bottom-left-radius: 3px;
         }
 
         .ai-message strong {
             font-weight: 700;
-            color: var(--dark);
         }
 
         .message-time {
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             opacity: 0.7;
-            margin-top: 5px;
+            margin-top: 3px;
             text-align: right;
+        }
+
+        .voice-note {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 8px;
+            background-color: rgba(0,0,0,0.05);
+            padding: 6px 10px;
+            border-radius: 20px;
+        }
+
+        .voice-controls {
+            display: flex;
+            gap: 5px;
+        }
+
+        .voice-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--primary);
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .voice-btn.download {
+            color: var(--success);
         }
 
         .chat-input {
             display: flex;
-            padding: 12px;
+            padding: 8px;
             background-color: #f9f9f9;
             border-top: 1px solid #e1e1e1;
         }
 
         .chat-input textarea {
             flex: 1;
-            padding: 10px 15px;
+            padding: 8px 12px;
             border: 1px solid #ddd;
-            border-radius: 25px;
+            border-radius: 20px;
             resize: none;
             outline: none;
-            font-size: 0.95rem;
-            max-height: 120px;
-            transition: border 0.2s;
-        }
-
-        .chat-input textarea:focus {
-            border-color: var(--primary);
+            font-size: 0.9rem;
+            max-height: 100px;
         }
 
         .chat-input button {
-            margin-left: 10px;
-            padding: 0 18px;
+            margin-left: 8px;
+            padding: 0 15px;
             background-color: var(--primary);
             color: var(--light);
             border: none;
-            border-radius: 25px;
+            border-radius: 20px;
             cursor: pointer;
             font-weight: 600;
-            transition: background-color 0.2s;
-        }
-
-        .chat-input button:hover {
-            background-color: var(--primary-dark);
+            font-size: 0.9rem;
         }
 
         .loading {
             display: none;
             text-align: center;
-            padding: 8px;
+            padding: 5px;
             color: var(--primary);
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
         .loading.active {
@@ -251,10 +271,11 @@
             position: relative;
             background-color: #282c34;
             color: #abb2bf;
-            border-radius: 8px;
-            padding: 12px;
-            margin: 8px 0;
-            font-family: 'Courier New', Courier, monospace;
+            border-radius: 6px;
+            padding: 10px;
+            margin: 6px 0;
+            font-family: monospace;
+            font-size: 0.85rem;
             overflow-x: auto;
         }
 
@@ -262,46 +283,29 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             color: #9da5b4;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
 
         .copy-btn {
             background-color: #3a3f4b;
             color: #abb2bf;
             border: none;
-            padding: 4px 8px;
-            border-radius: 4px;
+            padding: 3px 6px;
+            border-radius: 3px;
             cursor: pointer;
-            font-size: 0.75rem;
-            transition: all 0.2s;
-        }
-
-        .copy-btn:hover {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .copy-btn.copied {
-            background-color: var(--success);
-            color: white;
+            font-size: 0.7rem;
         }
 
         .preview-panel {
-            width: 45%;
+            width: 40%;
             background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             display: none;
             flex-direction: column;
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(20px); }
-            to { opacity: 1; transform: translateX(0); }
         }
 
         .preview-panel.active {
@@ -309,17 +313,18 @@
         }
 
         .preview-header {
-            padding: 12px 15px;
+            padding: 8px 12px;
             background-color: #f5f5f5;
             border-bottom: 1px solid #ddd;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            font-size: 0.9rem;
         }
 
-        .preview-title {
-            font-weight: 600;
-            font-size: 0.9rem;
+        .preview-content {
+            flex: 1;
+            border: none;
         }
 
         .close-preview {
@@ -327,17 +332,6 @@
             border: none;
             color: #666;
             cursor: pointer;
-            font-size: 1.1rem;
-            transition: color 0.2s;
-        }
-
-        .close-preview:hover {
-            color: var(--error);
-        }
-
-        .preview-content {
-            flex: 1;
-            border: none;
         }
 
         .modal {
@@ -351,80 +345,46 @@
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s;
-        }
-
-        .modal.active {
-            opacity: 1;
-            pointer-events: all;
         }
 
         .modal-content {
             background-color: white;
-            border-radius: 10px;
+            border-radius: 8px;
             width: 90%;
-            max-width: 500px;
-            max-height: 80vh;
-            overflow-y: auto;
-            padding: 20px;
-            transform: translateY(20px);
-            transition: transform 0.3s;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .modal.active .modal-content {
-            transform: translateY(0);
+            max-width: 400px;
+            padding: 15px;
         }
 
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         .modal-title {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             color: var(--primary);
-            font-weight: 600;
         }
 
         .modal-close {
             background: none;
             border: none;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             cursor: pointer;
-            color: var(--gray);
-        }
-
-        .modal-section {
-            margin-bottom: 15px;
-        }
-
-        .modal-section h3 {
-            font-size: 1rem;
-            color: var(--primary);
-            margin-bottom: 8px;
-        }
-
-        .modal-section ul {
-            padding-left: 20px;
-            font-size: 0.9rem;
-            line-height: 1.5;
         }
 
         .status-item {
             display: flex;
             align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
+            gap: 6px;
+            margin-bottom: 6px;
+            font-size: 0.85rem;
         }
 
         .status-indicator {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
         }
 
@@ -441,18 +401,29 @@
         }
 
         @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
             .chat-wrapper {
                 flex-direction: column;
-                height: calc(100% - 130px);
+                height: calc(100% - 90px);
+                gap: 8px;
             }
             
             .preview-panel {
                 width: 100%;
-                height: 250px;
+                height: 200px;
             }
             
             .message {
                 max-width: 90%;
+                font-size: 0.85rem;
+            }
+            
+            .status-btn {
+                top: 10px;
+                right: 10px;
             }
         }
     </style>
@@ -463,12 +434,11 @@
             <h1>Multi-AI Interface</h1>
         </header>
 
-        <button class="status-btn" id="status-btn">Status: Checking...</button>
+        <button class="status-btn" id="status-btn">Status</button>
 
         <div class="ai-selector">
-            <button class="ai-btn active" data-ai="deepseek">DeepSeek V3</button>
+            <button class="ai-btn active" data-ai="deepseek">DeepSeek</button>
             <button class="ai-btn" data-ai="llama">Llama 3</button>
-            <button class="ai-btn" data-ai="chatbot">Chatbot</button>
             <button class="ai-btn" data-ai="gpt4">GPT-4</button>
         </div>
 
@@ -480,20 +450,20 @@
                 </div>
                 <div class="chat-messages" id="chat-messages">
                     <div class="message ai-message">
-                        Hello! I'm your AI assistant. Which model would you like to talk to? You can choose between DeepSeek V3, Llama 3, GPT-4, or a general Chatbot.
+                        Hello! I'm your AI assistant. Ask me anything or type /tts followed by text to convert to speech.
                         <div class="message-time">Just now</div>
                     </div>
                 </div>
-                <div class="loading" id="loading">AI is thinking...</div>
+                <div class="loading" id="loading">Thinking...</div>
                 <div class="chat-input">
-                    <textarea id="user-input" placeholder="Type your message here..." rows="1"></textarea>
+                    <textarea id="user-input" placeholder="Type your message..." rows="1"></textarea>
                     <button id="send-btn">Send</button>
                 </div>
             </div>
 
             <div class="preview-panel" id="preview-panel">
                 <div class="preview-header">
-                    <span class="preview-title">Live Preview</span>
+                    <span>Preview</span>
                     <button class="close-preview" id="close-preview">×</button>
                 </div>
                 <iframe class="preview-content" id="preview-content"></iframe>
@@ -501,61 +471,22 @@
         </div>
     </div>
 
-    <div class="modal" id="welcome-modal">
+    <div class="modal" id="status-modal" style="display: none;">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title">✨ Welcome to Multi-AI Interface ✨</h2>
-                <button class="modal-close" id="modal-close">&times;</button>
+                <h3 class="modal-title">API Status</h3>
+                <button class="modal-close" id="status-modal-close">×</button>
             </div>
-            <div class="modal-section">
-                <h3>What's New</h3>
-                <ul>
-                    <li>Added GPT-4 API support</li>
-                    <li>Improved conversation history context</li>
-                    <li>Enhanced code preview functionality</li>
-                    <li>Added API status monitoring</li>
-                </ul>
-            </div>
-            <div class="modal-section">
-                <h3>API Credits</h3>
-                <ul>
-                    <li>DeepSeek V3 API by David Cyril</li>
-                    <li>Llama 3 API by David Cyril</li>
-                    <li>GPT-4 API by David Cyril</li>
-                    <li>Chatbot API by David Cyril</li>
-                </ul>
-            </div>
-            <div class="modal-section">
-                <h3>Created by</h3>
-                <p>This interface was developed by <strong>Hans</strong></p>
+            <div id="api-status-list">
+                <div class="status-item">
+                    <div class="status-indicator"></div>
+                    <span>Checking...</span>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="modal" id="status-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">API Status</h2>
-                <button class="modal-close" id="status-modal-close">&times;</button>
-            </div>
-            <div class="modal-section">
-                <div id="api-status-list">
-                    <div class="status-item">
-                        <div class="status-indicator loading"></div>
-                        <span>Checking API status...</span>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-section">
-                <h3>Status Indicators</h3>
-                <ul>
-                    <li><span class="status-indicator online"></span> Online - API working normally</li>
-                    <li><span class="status-indicator offline"></span> Offline - API not responding</li>
-                    <li><span class="status-indicator slow"></span> Slow - High response time</li>
-                </ul>
-            </div>
-        </div>
-    </div>
+    <audio id="audio-player"></audio>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -570,393 +501,267 @@
             const previewContent = document.getElementById('preview-content');
             const closePreviewBtn = document.getElementById('close-preview');
             const statusBtn = document.getElementById('status-btn');
-            const welcomeModal = document.getElementById('welcome-modal');
             const statusModal = document.getElementById('status-modal');
-            const modalClose = document.getElementById('modal-close');
             const statusModalClose = document.getElementById('status-modal-close');
             const apiStatusList = document.getElementById('api-status-list');
+            const audioPlayer = document.getElementById('audio-player');
             
-            // State variables
+            // State
             let currentAI = 'deepseek';
             let conversationHistory = [
-                { role: 'assistant', content: "Hello! I'm your AI assistant. Which model would you like to talk to? You can choose between DeepSeek V3, Llama 3, GPT-4, or a general Chatbot." }
+                { role: 'assistant', content: "Hello! I'm your AI assistant. Ask me anything or type /tts followed by text to convert to speech." }
             ];
             
-            // Show welcome modal on first load
-            setTimeout(() => {
-                welcomeModal.classList.add('active');
-            }, 500);
+            // Initialize
+            checkAPIStatus();
             
-            // Modal controls
-            modalClose.addEventListener('click', () => welcomeModal.classList.remove('active'));
-            statusModalClose.addEventListener('click', () => statusModal.classList.remove('active'));
-            statusBtn.addEventListener('click', () => {
-                statusModal.classList.add('active');
-                checkAPIStatus();
-            });
-            
-            // Auto-resize textarea
-            userInput.addEventListener('input', function() {
-                this.style.height = 'auto';
-                this.style.height = (this.scrollHeight) + 'px';
-            });
-            
-            // AI selection
-            aiButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    aiButtons.forEach(btn => btn.classList.remove('active'));
-                    this.classList.add('active');
-                    currentAI = this.dataset.ai;
-                    
-                    switch(currentAI) {
-                        case 'deepseek':
-                            currentAiDisplay.textContent = 'DeepSeek V3';
-                            break;
-                        case 'llama':
-                            currentAiDisplay.textContent = 'Llama 3';
-                            break;
-                        case 'chatbot':
-                            currentAiDisplay.textContent = 'Chatbot';
-                            break;
-                        case 'gpt4':
-                            currentAiDisplay.textContent = 'GPT-4';
-                            break;
-                    }
-                });
-            });
-            
-            // Send message
-            function sendMessage() {
-                const message = userInput.value.trim();
-                if (message === '') return;
-                
-                // Check if asking about creator
-                if (message.toLowerCase().includes('siapa yang buat') || 
-                    message.toLowerCase().includes('who created') ||
-                    message.toLowerCase().includes('pembuat')) {
-                    addMessageToChat('user', message);
-                    userInput.value = '';
-                    setTimeout(() => {
-                        handleAIResponse("Web ini dibuat oleh <strong>Hans Yang</strong>");
-                    }, 500);
-                    return;
-                }
-                
-                // Add user message to chat
-                addMessageToChat('user', message);
-                userInput.value = '';
-                userInput.style.height = 'auto';
-                
-                // Show loading indicator
-                loadingIndicator.classList.add('active');
-                
-                // Add to conversation history
-                conversationHistory.push({ role: 'user', content: message });
-                
-                // Prepare conversation context
-                const context = prepareConversationContext();
-                
-                // Call appropriate API based on selected AI
-                callAIAPI(currentAI, message, context);
-            }
-            
-            // Prepare conversation context for API call
-            function prepareConversationContext() {
-                // Limit the context to last 6 messages to avoid too long prompts
-                const recentMessages = conversationHistory.slice(-6);
-                return recentMessages.map(msg => {
-                    return {
-                        role: msg.role,
-                        content: msg.content
-                    };
-                });
-            }
-            
-            // Event listeners for sending
+            // Event Listeners
+            aiButtons.forEach(btn => btn.addEventListener('click', selectAI));
             sendBtn.addEventListener('click', sendMessage);
-            userInput.addEventListener('keydown', function(e) {
+            userInput.addEventListener('keydown', e => {
                 if (e.key === 'Enter' && !e.shiftKey) {
                     e.preventDefault();
                     sendMessage();
                 }
             });
+            closePreviewBtn.addEventListener('click', () => previewPanel.classList.remove('active'));
+            statusBtn.addEventListener('click', () => statusModal.style.display = 'flex');
+            statusModalClose.addEventListener('click', () => statusModal.style.display = 'none');
             
-            // Close preview panel
-            closePreviewBtn.addEventListener('click', function() {
-                previewPanel.classList.remove('active');
-            });
+            // Functions
+            function selectAI(e) {
+                aiButtons.forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+                currentAI = e.target.dataset.ai;
+                currentAiDisplay.textContent = 
+                    currentAI === 'deepseek' ? 'DeepSeek V3' :
+                    currentAI === 'llama' ? 'Llama 3' :
+                    currentAI === 'gpt4' ? 'GPT-4' : 'Chatbot';
+            }
             
-            // Add message to chat UI
-            function addMessageToChat(role, content) {
+            function sendMessage() {
+                const message = userInput.value.trim();
+                if (!message) return;
+                
+                // Handle TTS command
+                if (message.startsWith('/tts ')) {
+                    const ttsText = message.substring(5);
+                    if (ttsText) {
+                        convertToSpeech(ttsText);
+                        userInput.value = '';
+                        return;
+                    }
+                }
+                
+                // Handle creator question
+                if (message.toLowerCase().includes('siapa yang buat') || 
+                    message.toLowerCase().includes('who created')) {
+                    addMessage('user', message);
+                    setTimeout(() => {
+                        addMessage('ai', "Web ini dibuat oleh <strong>Hans Yang</strong>");
+                    }, 500);
+                    userInput.value = '';
+                    return;
+                }
+                
+                addMessage('user', message);
+                userInput.value = '';
+                loadingIndicator.classList.add('active');
+                
+                // Call AI API
+                fetchAIResponse(message);
+            }
+            
+            function addMessage(role, content) {
                 const messageDiv = document.createElement('div');
-                messageDiv.classList.add('message');
-                messageDiv.classList.add(role === 'user' ? 'user-message' : 'ai-message');
+                messageDiv.className = `message ${role}-message`;
                 
-                // Process content for code blocks and bold text
-                let processedContent = formatResponseText(content);
+                // Format bold text and code blocks
+                let formattedContent = content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                if (content.includes('```')) {
+                    formattedContent = formatCodeBlocks(content);
+                }
                 
-                messageDiv.innerHTML = processedContent;
+                messageDiv.innerHTML = formattedContent;
                 
-                // Add timestamp
                 const timeDiv = document.createElement('div');
-                timeDiv.classList.add('message-time');
+                timeDiv.className = 'message-time';
                 timeDiv.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                 messageDiv.appendChild(timeDiv);
                 
                 chatMessages.appendChild(messageDiv);
                 scrollToBottom();
                 
-                // Add event listeners for any new code blocks
-                setTimeout(() => {
-                    addCodeBlockListeners();
-                }, 100);
+                // Add to history
+                conversationHistory.push({ role, content });
             }
             
-            // Format response text with bold and code blocks
-            function formatResponseText(text) {
-                // Process bold text (**text**)
-                let formatted = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-                
-                // Process code blocks (```)
-                if (formatted.includes('```')) {
-                    formatted = processCodeBlocks(formatted);
-                }
-                
-                return formatted;
-            }
-            
-            // Scroll to bottom of chat
-            function scrollToBottom() {
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }
-            
-            // Process code blocks in AI responses
-            function processCodeBlocks(content) {
-                const parts = content.split('```');
+            function formatCodeBlocks(text) {
+                const parts = text.split('```');
                 let result = '';
                 
                 for (let i = 0; i < parts.length; i++) {
                     if (i % 2 === 0) {
-                        // Regular text
                         result += parts[i];
                     } else {
-                        // Code block
-                        const languageMatch = parts[i].match(/^(\w+)\n/);
-                        let language = 'text';
-                        let code = parts[i];
+                        const langMatch = parts[i].match(/^(\w+)\n/);
+                        const lang = langMatch ? langMatch[1] : 'text';
+                        const code = langMatch ? parts[i].substring(langMatch[0].length) : parts[i];
                         
-                        if (languageMatch) {
-                            language = languageMatch[1];
-                            code = parts[i].substring(languageMatch[0].length);
-                        }
-                        
-                        result += createCodeBlock(code, language);
+                        result += `<div class="code-block">
+                            <div class="code-header">
+                                <span>${lang}</span>
+                                <button class="copy-btn" data-code="${i}">Copy</button>
+                            </div>
+                            <pre>${escapeHtml(code)}</pre>
+                        </div>`;
                     }
                 }
-                
                 return result;
             }
             
-            // Create HTML for a code block with copy button
-            function createCodeBlock(code, language) {
-                const blockId = 'code-' + Math.random().toString(36).substr(2, 9);
-                
-                let html = `
-                    <div class="code-block">
-                        <div class="code-header">
-                            <span>${language}</span>
-                            <button class="copy-btn" data-code="${blockId}">Copy</button>
-                        </div>
-                        <pre id="${blockId}">${escapeHtml(code)}</pre>
-                `;
-                
-                // If it's HTML code, add preview button
-                if (language.toLowerCase() === 'html') {
-                    html += `
-                        <button class="preview-btn" data-code="${blockId}" style="margin-top: 10px; background-color: var(--primary); color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Show Live Preview</button>
-                    `;
-                }
-                
-                html += `</div>`;
-                return html;
+            function escapeHtml(text) {
+                return text.replace(/&/g, "&amp;")
+                          .replace(/</g, "&lt;")
+                          .replace(/>/g, "&gt;")
+                          .replace(/"/g, "&quot;")
+                          .replace(/'/g, "&#039;");
             }
             
-            // Escape HTML for safe rendering
-            function escapeHtml(unsafe) {
-                return unsafe
-                    .replace(/&/g, "&amp;")
-                    .replace(/</g, "&lt;")
-                    .replace(/>/g, "&gt;")
-                    .replace(/"/g, "&quot;")
-                    .replace(/'/g, "&#039;");
+            function scrollToBottom() {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
             }
             
-            // Call the appropriate AI API
-            function callAIAPI(ai, message, context) {
-                let apiUrl;
-                
-                switch(ai) {
-                    case 'deepseek':
-                        apiUrl = 'https://apis.davidcyriltech.my.id/ai/deepseek-v3?text=' + encodeURIComponent(formatContext(context, message));
-                        break;
-                        
-                    case 'llama':
-                        apiUrl = 'https://apis.davidcyriltech.my.id/ai/llama3?text=' + encodeURIComponent(formatContext(context, message));
-                        break;
-                        
-                    case 'chatbot':
-                        apiUrl = 'https://apis.davidcyriltech.my.id/ai/chatbot?query=' + encodeURIComponent(formatContext(context, message));
-                        break;
-                        
-                    case 'gpt4':
-                        apiUrl = 'https://apis.davidcyriltech.my.id/ai/gpt4?text=' + encodeURIComponent(formatContext(context, message));
-                        break;
-                }
+            function fetchAIResponse(message) {
+                const apiUrl = 
+                    currentAI === 'deepseek' ? `https://apis.davidcyriltech.my.id/ai/deepseek-v3?text=${encodeURIComponent(message)}` :
+                    currentAI === 'llama' ? `https://apis.davidcyriltech.my.id/ai/llama3?text=${encodeURIComponent(message)}` :
+                    currentAI === 'gpt4' ? `https://apis.davidcyriltech.my.id/ai/gpt4?text=${encodeURIComponent(message)}` :
+                    `https://apis.davidcyriltech.my.id/ai/chatbot?query=${encodeURIComponent(message)}`;
                 
                 fetch(apiUrl)
-                    .then(response => response.json())
+                    .then(res => res.json())
                     .then(data => {
-                        const response = data.response || data.message || "I couldn't process that request.";
-                        handleAIResponse(response);
+                        const response = data.response || data.message || "No response from AI";
+                        addMessage('ai', response);
+                        loadingIndicator.classList.remove('active');
                     })
-                    .catch(error => {
-                        handleAIResponse("Sorry, there was an error processing your request.");
-                        console.error('Error:', error);
+                    .catch(err => {
+                        addMessage('ai', "Error connecting to AI service");
+                        loadingIndicator.classList.remove('active');
+                        console.error(err);
                     });
             }
             
-            // Format conversation context for API call
-            function formatContext(context, newMessage) {
-                // Format the conversation history into a coherent text
-                let formatted = '';
+            function convertToSpeech(text) {
+                addMessage('user', `/tts ${text}`);
+                loadingIndicator.classList.add('active');
                 
-                context.forEach(msg => {
-                    const speaker = msg.role === 'user' ? 'User' : 'AI';
-                    formatted += `${speaker}: ${msg.content.replace(/\*\*(.*?)\*\*/g, '$1')}\n\n`;
-                });
-                
-                formatted += `User: ${newMessage}`;
-                return formatted;
-            }
-            
-            // Handle AI response
-            function handleAIResponse(response) {
-                loadingIndicator.classList.remove('active');
-                addMessageToChat('ai', response);
-                
-                // Add to conversation history
-                conversationHistory.push({ role: 'assistant', content: response });
-            }
-            
-            // Add event listeners for copy buttons and preview buttons
-            function addCodeBlockListeners() {
-                // Copy buttons
-                document.querySelectorAll('.copy-btn').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const codeId = this.dataset.code;
-                        const codeElement = document.getElementById(codeId);
-                        const codeText = codeElement.textContent;
-                        
-                        navigator.clipboard.writeText(codeText).then(() => {
-                            this.textContent = 'Copied!';
-                            this.classList.add('copied');
-                            setTimeout(() => {
-                                this.textContent = 'Copy';
-                                this.classList.remove('copied');
-                            }, 2000);
-                        });
+                fetch(`https://api.agatz.xyz/api/tts?message=${encodeURIComponent(text)}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.status === 200 && data.data[0]?.url) {
+                            const audioUrl = data.data[0].url;
+                            addVoiceNote(text, audioUrl);
+                        } else {
+                            addMessage('ai', "Failed to generate speech");
+                        }
+                        loadingIndicator.classList.remove('active');
+                    })
+                    .catch(err => {
+                        addMessage('ai', "Error generating speech");
+                        loadingIndicator.classList.remove('active');
+                        console.error(err);
                     });
-                });
-                
-                // Preview buttons
-                document.querySelectorAll('.preview-btn').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const codeId = this.dataset.code;
-                        const codeElement = document.getElementById(codeId);
-                        const codeText = codeElement.textContent;
-                        
-                        // Show the preview panel with the HTML content
-                        previewContent.srcdoc = codeText;
-                        previewPanel.classList.add('active');
-                    });
-                });
             }
             
-            // Check API status
-            function checkAPIStatus() {
-                apiStatusList.innerHTML = `
-                    <div class="status-item">
-                        <div class="status-indicator loading"></div>
-                        <span>Checking API status...</span>
+            function addVoiceNote(text, audioUrl) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message ai-message';
+                messageDiv.innerHTML = `TTS generated for: "${text}"`;
+                
+                const voiceNote = document.createElement('div');
+                voiceNote.className = 'voice-note';
+                voiceNote.innerHTML = `
+                    <div class="voice-controls">
+                        <button class="voice-btn play" onclick="playAudio('${audioUrl}')">▶ Play</button>
+                        <button class="voice-btn download" onclick="downloadAudio('${audioUrl}', '${text.replace(/[^a-z0-9]/gi, '_')}')">↓ Download</button>
                     </div>
                 `;
                 
+                messageDiv.appendChild(voiceNote);
+                
+                const timeDiv = document.createElement('div');
+                timeDiv.className = 'message-time';
+                timeDiv.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                messageDiv.appendChild(timeDiv);
+                
+                chatMessages.appendChild(messageDiv);
+                scrollToBottom();
+            }
+            
+            window.playAudio = function(url) {
+                audioPlayer.src = url;
+                audioPlayer.play();
+            };
+            
+            window.downloadAudio = function(url, filename) {
+                fetch(url)
+                    .then(res => res.blob())
+                    .then(blob => {
+                        const a = document.createElement('a');
+                        a.href = URL.createObjectURL(blob);
+                        a.download = `${filename || 'tts'}.mp3`;
+                        a.click();
+                    });
+            };
+            
+            function checkAPIStatus() {
+                statusBtn.classList.add('loading');
+                statusBtn.textContent = 'Checking...';
+                
                 const apis = [
-                    { name: 'DeepSeek V3', url: 'https://apis.davidcyriltech.my.id/ai/deepseek-v3?text=ping' },
+                    { name: 'DeepSeek', url: 'https://apis.davidcyriltech.my.id/ai/deepseek-v3?text=ping' },
                     { name: 'Llama 3', url: 'https://apis.davidcyriltech.my.id/ai/llama3?text=ping' },
-                    { name: 'Chatbot', url: 'https://apis.davidcyriltech.my.id/ai/chatbot?query=ping' },
-                    { name: 'GPT-4', url: 'https://apis.davidcyriltech.my.id/ai/gpt4?text=ping' }
+                    { name: 'GPT-4', url: 'https://apis.davidcyriltech.my.id/ai/gpt4?text=ping' },
+                    { name: 'TTS', url: 'https://api.agatz.xyz/api/tts?message=ping' }
                 ];
                 
-                let statusHtml = '';
+                let statusHTML = '';
                 let allOnline = true;
-                let anySlow = false;
                 
                 apis.forEach(api => {
-                    const startTime = Date.now();
-                    fetch(api.url)
-                        .then(response => {
-                            const responseTime = Date.now() - startTime;
-                            const isSlow = responseTime > 2000;
-                            
-                            if (isSlow) anySlow = true;
-                            
-                            statusHtml += `
+                    const start = Date.now();
+                    fetch(api.url, { method: 'HEAD' })
+                        .then(res => {
+                            const time = Date.now() - start;
+                            const isSlow = time > 2000;
+                            statusHTML += `
                                 <div class="status-item">
                                     <div class="status-indicator ${isSlow ? 'slow' : 'online'}"></div>
-                                    <span>${api.name}: ${isSlow ? 'Slow' : 'Online'} (${responseTime}ms)</span>
+                                    <span>${api.name}: ${isSlow ? 'Slow' : 'Online'} (${time}ms)</span>
                                 </div>
                             `;
-                            updateStatusList();
+                            if (!res.ok) throw new Error('Offline');
                         })
-                        .catch(error => {
-                            allOnline = false;
-                            statusHtml += `
+                        .catch(err => {
+                            statusHTML += `
                                 <div class="status-item">
                                     <div class="status-indicator offline"></div>
                                     <span>${api.name}: Offline</span>
                                 </div>
                             `;
-                            updateStatusList();
+                            allOnline = false;
+                        })
+                        .finally(() => {
+                            apiStatusList.innerHTML = statusHTML;
+                            statusBtn.classList.remove('loading');
+                            statusBtn.classList.toggle('error', !allOnline);
+                            statusBtn.classList.toggle('active', allOnline);
+                            statusBtn.textContent = allOnline ? 'All Online' : 'Some Offline';
                         });
                 });
-                
-                function updateStatusList() {
-                    apiStatusList.innerHTML = statusHtml;
-                    
-                    // Update status button
-                    if (!allOnline) {
-                        statusBtn.classList.add('error');
-                        statusBtn.classList.remove('loading');
-                        statusBtn.textContent = 'Status: Some APIs offline';
-                    } else if (anySlow) {
-                        statusBtn.classList.remove('error');
-                        statusBtn.classList.add('loading');
-                        statusBtn.textContent = 'Status: Some APIs slow';
-                    } else {
-                        statusBtn.classList.remove('error', 'loading');
-                        statusBtn.classList.add('active');
-                        statusBtn.textContent = 'Status: All APIs online';
-                    }
-                }
             }
-            
-            // Initialize code block listeners for the welcome message
-            addCodeBlockListeners();
-            
-            // Initial API status check
-            checkAPIStatus();
-            setInterval(checkAPIStatus, 30000); // Check every 30 seconds
         });
     </script>
 </body>
