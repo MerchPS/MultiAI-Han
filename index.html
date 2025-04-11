@@ -204,6 +204,7 @@
             margin: 5px 0;
             font-size: 0.85rem;
             text-align: center;
+            width: 90%;
         }
 
         .voice-note {
@@ -211,14 +212,14 @@
             align-items: center;
             justify-content: center;
             gap: 10px;
-            margin-top: 5px;
+            margin-top: 8px;
         }
 
         .voice-btn {
             background-color: var(--primary);
             color: white;
             border: none;
-            padding: 5px 10px;
+            padding: 6px 12px;
             border-radius: 15px;
             cursor: pointer;
             font-size: 0.8rem;
@@ -234,14 +235,16 @@
 
         .voice-btn.play::before {
             content: "▶";
+            margin-right: 3px;
         }
 
         .voice-btn.download::before {
             content: "↓";
+            margin-right: 3px;
         }
 
         .chat-input-container {
-            padding: 8px;
+            padding: 10px;
             background-color: #f9f9f9;
             border-top: 1px solid #e1e1e1;
         }
@@ -249,23 +252,25 @@
         .chat-input {
             display: flex;
             width: 100%;
+            align-items: center;
         }
 
         .chat-input textarea {
             flex: 1;
-            padding: 8px 12px;
+            padding: 10px 12px;
             border: 1px solid #ddd;
             border-radius: 20px;
             resize: none;
             outline: none;
             font-size: 0.9rem;
-            max-height: 100px;
-            min-height: 40px;
+            min-height: 45px;
+            max-height: 120px;
         }
 
         .chat-input button {
             margin-left: 8px;
             padding: 0 15px;
+            height: 45px;
             background-color: var(--primary);
             color: var(--light);
             border: none;
@@ -273,7 +278,7 @@
             cursor: pointer;
             font-weight: 600;
             font-size: 0.9rem;
-            min-width: 60px;
+            min-width: 70px;
         }
 
         .loading {
@@ -432,7 +437,7 @@
             
             .chat-wrapper {
                 flex-direction: column;
-                height: calc(100% - 90px);
+                height: calc(100% - 110px);
                 gap: 6px;
             }
             
@@ -451,8 +456,28 @@
                 right: 8px;
             }
             
+            .chat-input-container {
+                padding: 12px;
+            }
+            
             .chat-input textarea {
                 min-height: 50px;
+                padding: 12px 15px;
+            }
+            
+            .chat-input button {
+                height: 50px;
+                min-width: 80px;
+            }
+            
+            .tts-message {
+                width: 95%;
+                padding: 10px;
+            }
+            
+            .voice-btn {
+                padding: 8px 15px;
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -544,7 +569,8 @@
                 currentAI: 'deepseek',
                 conversationHistory: [
                     { role: 'assistant', content: "Hello! I'm your AI assistant. Type /tts followed by text to convert to speech." }
-                ]
+                ],
+                ttsApiUrl: 'https://api.agatz.xyz/api/tts'
             };
 
             // Initialize
@@ -569,6 +595,12 @@
                         e.preventDefault();
                         sendMessage();
                     }
+                });
+
+                // Auto-resize textarea
+                elements.userInput.addEventListener('input', function() {
+                    this.style.height = 'auto';
+                    this.style.height = (this.scrollHeight) + 'px';
                 });
 
                 // Preview panel
@@ -744,8 +776,12 @@
             function convertToSpeech(text) {
                 elements.loadingIndicator.classList.add('active');
                 
-                fetch(`https://api.agatz.xyz/api/tts?message=${encodeURIComponent(text)}`)
-                    .then(res => res.json())
+                // Use our own server endpoint to bypass CORS
+                fetch(`${state.ttsApiUrl}?message=${encodeURIComponent(text)}`)
+                    .then(res => {
+                        if (!res.ok) throw new Error('TTS service error');
+                        return res.json();
+                    })
                     .then(data => {
                         if (data.status === 200 && data.data[0]?.url) {
                             showTTSResult(text, data.data[0].url);
@@ -793,7 +829,7 @@
                     { name: 'DeepSeek', url: 'https://apis.davidcyriltech.my.id/ai/deepseek-v3?text=ping' },
                     { name: 'Llama 3', url: 'https://apis.davidcyriltech.my.id/ai/llama3?text=ping' },
                     { name: 'GPT-4', url: 'https://apis.davidcyriltech.my.id/ai/gpt4?text=ping' },
-                    { name: 'TTS', url: 'https://api.agatz.xyz/api/tts?message=ping' }
+                    { name: 'TTS', url: state.ttsApiUrl }
                 ];
                 
                 let statusHTML = '';
@@ -849,18 +885,21 @@
 
             window.playTTS = function(url) {
                 elements.audioPlayer.src = url;
-                elements.audioPlayer.play();
+                elements.audioPlayer.play().catch(e => {
+                    console.error("Audio playback failed:", e);
+                    // Fallback to opening in new tab if play fails
+                    window.open(url, '_blank');
+                });
             };
 
             window.downloadTTS = function(url, filename) {
-                fetch(url)
-                    .then(res => res.blob())
-                    .then(blob => {
-                        const a = document.createElement('a');
-                        a.href = URL.createObjectURL(blob);
-                        a.download = `${filename || 'tts'}.mp3`;
-                        a.click();
-                    });
+                // Create a temporary link to trigger download
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${filename || 'tts'}.mp3`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
             };
         });
     </script>
