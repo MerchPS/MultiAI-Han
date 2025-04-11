@@ -62,7 +62,7 @@
         }
 
         .ai-btn {
-            padding: 6px 12px;
+            padding: 8px 16px;
             background-color: var(--light);
             border: 2px solid var(--primary);
             border-radius: 20px;
@@ -70,7 +70,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
         }
 
         .ai-btn:hover {
@@ -87,13 +87,13 @@
             position: absolute;
             right: 10px;
             top: 10px;
-            padding: 4px 8px;
+            padding: 6px 12px;
             border: 1px solid var(--gray);
             border-radius: 20px;
             color: var(--dark);
             font-weight: 600;
             cursor: pointer;
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             display: flex;
             align-items: center;
             gap: 5px;
@@ -102,8 +102,8 @@
 
         .status-btn::before {
             content: "";
-            width: 8px;
-            height: 8px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
             background-color: var(--gray);
         }
@@ -124,7 +124,7 @@
             display: flex;
             flex: 1;
             gap: 10px;
-            height: calc(100% - 100px);
+            height: calc(100% - 110px);
         }
 
         .chat-container {
@@ -139,14 +139,14 @@
         }
 
         .chat-header {
-            padding: 8px 15px;
+            padding: 10px 15px;
             background-color: var(--primary);
             color: var(--light);
             font-weight: 600;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
 
         .chat-messages {
@@ -160,11 +160,11 @@
 
         .message {
             max-width: 85%;
-            padding: 8px 12px;
+            padding: 10px 14px;
             border-radius: 12px;
             position: relative;
             animation: fadeIn 0.3s ease;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
 
         @keyframes fadeIn {
@@ -190,7 +190,7 @@
         }
 
         .message-time {
-            font-size: 0.6rem;
+            font-size: 0.7rem;
             opacity: 0.7;
             margin-top: 3px;
             text-align: right;
@@ -200,9 +200,9 @@
             align-self: center;
             background-color: #e9f5ff;
             border-radius: 12px;
-            padding: 8px 12px;
+            padding: 10px 14px;
             margin: 5px 0;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             text-align: center;
             width: 90%;
         }
@@ -211,7 +211,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 12px;
             margin-top: 8px;
         }
 
@@ -219,10 +219,10 @@
             background-color: var(--primary);
             color: white;
             border: none;
-            padding: 6px 12px;
-            border-radius: 15px;
+            padding: 8px 16px;
+            border-radius: 20px;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             display: flex;
             align-items: center;
             gap: 5px;
@@ -235,16 +235,16 @@
 
         .voice-btn.play::before {
             content: "▶";
-            margin-right: 3px;
+            margin-right: 5px;
         }
 
         .voice-btn.download::before {
             content: "↓";
-            margin-right: 3px;
+            margin-right: 5px;
         }
 
         .chat-input-container {
-            padding: 10px;
+            padding: 12px;
             background-color: #f9f9f9;
             border-top: 1px solid #e1e1e1;
         }
@@ -253,40 +253,45 @@
             display: flex;
             width: 100%;
             align-items: center;
+            gap: 8px;
         }
 
         .chat-input textarea {
             flex: 1;
-            padding: 10px 12px;
+            padding: 12px 16px;
             border: 1px solid #ddd;
             border-radius: 20px;
             resize: none;
             outline: none;
-            font-size: 0.9rem;
-            min-height: 45px;
+            font-size: 0.95rem;
+            min-height: 50px;
             max-height: 120px;
         }
 
         .chat-input button {
-            margin-left: 8px;
-            padding: 0 15px;
-            height: 45px;
+            padding: 0 18px;
+            height: 50px;
             background-color: var(--primary);
             color: var(--light);
             border: none;
             border-radius: 20px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 0.9rem;
-            min-width: 70px;
+            font-size: 0.95rem;
+            min-width: 80px;
+            transition: background-color 0.2s;
+        }
+
+        .chat-input button:hover {
+            background-color: var(--primary-dark);
         }
 
         .loading {
             display: none;
             text-align: center;
-            padding: 5px;
+            padding: 8px;
             color: var(--primary);
-            font-size: 0.8rem;
+            font-size: 0.9rem;
         }
 
         .loading.active {
@@ -297,11 +302,11 @@
             position: relative;
             background-color: #282c34;
             color: #abb2bf;
-            border-radius: 6px;
-            padding: 10px;
-            margin: 6px 0;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 8px 0;
             font-family: monospace;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             overflow-x: auto;
         }
 
@@ -309,19 +314,19 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             color: #9da5b4;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
         }
 
         .copy-btn {
             background-color: #3a3f4b;
             color: #abb2bf;
             border: none;
-            padding: 3px 6px;
-            border-radius: 3px;
+            padding: 4px 8px;
+            border-radius: 4px;
             cursor: pointer;
-            font-size: 0.7rem;
+            font-size: 0.8rem;
         }
 
         .preview-panel {
@@ -339,13 +344,13 @@
         }
 
         .preview-header {
-            padding: 8px 12px;
+            padding: 10px 15px;
             background-color: #f5f5f5;
             border-bottom: 1px solid #ddd;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
 
         .preview-content {
@@ -358,6 +363,7 @@
             border: none;
             color: #666;
             cursor: pointer;
+            font-size: 1.1rem;
         }
 
         .modal {
@@ -379,42 +385,46 @@
 
         .modal-content {
             background-color: white;
-            border-radius: 8px;
+            border-radius: 10px;
             width: 90%;
-            max-width: 400px;
-            padding: 15px;
+            max-width: 450px;
+            padding: 20px;
+            max-height: 80vh;
+            overflow-y: auto;
         }
 
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         .modal-title {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: var(--primary);
+            font-weight: 600;
         }
 
         .modal-close {
             background: none;
             border: none;
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             cursor: pointer;
+            color: var(--gray);
         }
 
         .status-item {
             display: flex;
             align-items: center;
-            gap: 6px;
-            margin-bottom: 6px;
-            font-size: 0.85rem;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
         }
 
         .status-indicator {
-            width: 10px;
-            height: 10px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
         }
 
@@ -437,47 +447,50 @@
             
             .chat-wrapper {
                 flex-direction: column;
-                height: calc(100% - 110px);
-                gap: 6px;
+                height: calc(100% - 120px);
+                gap: 8px;
             }
             
             .preview-panel {
                 width: 100%;
-                height: 200px;
+                height: 250px;
             }
             
             .message {
                 max-width: 90%;
-                font-size: 0.85rem;
+                font-size: 0.9rem;
             }
             
             .status-btn {
                 top: 8px;
                 right: 8px;
+                padding: 5px 10px;
             }
             
             .chat-input-container {
-                padding: 12px;
+                padding: 15px;
             }
             
             .chat-input textarea {
-                min-height: 50px;
-                padding: 12px 15px;
+                min-height: 60px;
+                padding: 15px;
+                font-size: 1rem;
             }
             
             .chat-input button {
-                height: 50px;
-                min-width: 80px;
+                height: 60px;
+                min-width: 90px;
+                font-size: 1rem;
             }
             
             .tts-message {
                 width: 95%;
-                padding: 10px;
+                padding: 12px;
             }
             
             .voice-btn {
-                padding: 8px 15px;
-                font-size: 0.9rem;
+                padding: 10px 18px;
+                font-size: 1rem;
             }
         }
     </style>
@@ -536,7 +549,7 @@
             <div id="api-status-list">
                 <div class="status-item">
                     <div class="status-indicator"></div>
-                    <span>Checking...</span>
+                    <span>Checking API status...</span>
                 </div>
             </div>
         </div>
@@ -570,11 +583,18 @@
                 conversationHistory: [
                     { role: 'assistant', content: "Hello! I'm your AI assistant. Type /tts followed by text to convert to speech." }
                 ],
-                ttsApiUrl: 'https://api.agatz.xyz/api/tts'
+                apiEndpoints: {
+                    deepseek: 'https://apis.davidcyriltech.my.id/ai/deepseek-v3',
+                    llama: 'https://apis.davidcyriltech.my.id/ai/llama3',
+                    gpt4: 'https://apis.davidcyriltech.my.id/ai/gpt4',
+                    chatbot: 'https://apis.davidcyriltech.my.id/ai/chatbot',
+                    tts: 'https://api.agatz.xyz/api/tts'
+                },
+                apiStatus: {}
             };
 
             // Initialize
-            checkAPIStatus();
+            checkAllAPIStatus();
             setupEventListeners();
 
             function setupEventListeners() {
@@ -732,7 +752,10 @@
                 const apiUrl = getAPIUrl(message, context);
                 
                 fetch(apiUrl)
-                    .then(res => res.json())
+                    .then(res => {
+                        if (!res.ok) throw new Error('API error');
+                        return res.json();
+                    })
                     .then(data => {
                         const response = data.response || data.message || "No response from AI";
                         addMessage('ai', response);
@@ -756,11 +779,13 @@
 
             function getAPIUrl(message, context) {
                 const formattedContext = formatContextForAPI(context, message);
+                const baseUrl = state.apiEndpoints[state.currentAI];
                 
-                return state.currentAI === 'deepseek' ? `https://apis.davidcyriltech.my.id/ai/deepseek-v3?text=${encodeURIComponent(formattedContext)}` :
-                       state.currentAI === 'llama' ? `https://apis.davidcyriltech.my.id/ai/llama3?text=${encodeURIComponent(formattedContext)}` :
-                       state.currentAI === 'gpt4' ? `https://apis.davidcyriltech.my.id/ai/gpt4?text=${encodeURIComponent(formattedContext)}` :
-                       `https://apis.davidcyriltech.my.id/ai/chatbot?query=${encodeURIComponent(formattedContext)}`;
+                if (state.currentAI === 'chatbot') {
+                    return `${baseUrl}?query=${encodeURIComponent(formattedContext)}`;
+                } else {
+                    return `${baseUrl}?text=${encodeURIComponent(formattedContext)}`;
+                }
             }
 
             function formatContextForAPI(context, newMessage) {
@@ -776,8 +801,7 @@
             function convertToSpeech(text) {
                 elements.loadingIndicator.classList.add('active');
                 
-                // Use our own server endpoint to bypass CORS
-                fetch(`${state.ttsApiUrl}?message=${encodeURIComponent(text)}`)
+                fetch(`${state.apiEndpoints.tts}?message=${encodeURIComponent(text)}`)
                     .then(res => {
                         if (!res.ok) throw new Error('TTS service error');
                         return res.json();
@@ -804,7 +828,7 @@
                     <div>TTS generated for: "${text}"</div>
                     <div class="voice-note">
                         <button class="voice-btn play" onclick="playTTS('${audioUrl}')">Play</button>
-                        <button class="voice-btn download" onclick="downloadTTS('${audioUrl}', '${text.replace(/[^a-z0-9]/gi, '_')}')">Download</button>
+                        <button class="voice-btn download" onclick="downloadTTS('${audioUrl}', 'tts_${Date.now()}')">Download</button>
                     </div>
                     <div class="message-time">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
                 `;
@@ -821,55 +845,87 @@
                 scrollToBottom();
             }
 
-            function checkAPIStatus() {
+            function checkAllAPIStatus() {
                 elements.statusBtn.classList.add('loading');
                 elements.statusBtn.textContent = 'Checking...';
                 
-                const apis = [
-                    { name: 'DeepSeek', url: 'https://apis.davidcyriltech.my.id/ai/deepseek-v3?text=ping' },
-                    { name: 'Llama 3', url: 'https://apis.davidcyriltech.my.id/ai/llama3?text=ping' },
-                    { name: 'GPT-4', url: 'https://apis.davidcyriltech.my.id/ai/gpt4?text=ping' },
-                    { name: 'TTS', url: state.ttsApiUrl }
+                // Clear previous status
+                state.apiStatus = {};
+                
+                // Check each API
+                const apiChecks = [
+                    checkAPIStatus('deepseek', state.apiEndpoints.deepseek + '?text=ping'),
+                    checkAPIStatus('llama', state.apiEndpoints.llama + '?text=ping'),
+                    checkAPIStatus('gpt4', state.apiEndpoints.gpt4 + '?text=ping'),
+                    checkAPIStatus('tts', state.apiEndpoints.tts + '?message=ping')
                 ];
                 
-                let statusHTML = '';
-                let allOnline = true;
-                
-                apis.forEach(api => {
-                    const start = Date.now();
-                    fetch(api.url, { method: 'HEAD' })
-                        .then(res => {
-                            const time = Date.now() - start;
-                            const isSlow = time > 2000;
-                            statusHTML += `
-                                <div class="status-item">
-                                    <div class="status-indicator ${isSlow ? 'slow' : 'online'}"></div>
-                                    <span>${api.name}: ${isSlow ? 'Slow' : 'Online'} (${time}ms)</span>
-                                </div>
-                            `;
-                            if (!res.ok) throw new Error('Offline');
-                        })
-                        .catch(err => {
-                            statusHTML += `
-                                <div class="status-item">
-                                    <div class="status-indicator offline"></div>
-                                    <span>${api.name}: Offline</span>
-                                </div>
-                            `;
-                            allOnline = false;
-                        })
-                        .finally(() => {
-                            elements.apiStatusList.innerHTML = statusHTML;
-                            updateStatusButton(allOnline);
-                        });
+                Promise.all(apiChecks).then(() => {
+                    updateStatusDisplay();
+                    updateStatusButton();
                 });
             }
 
-            function updateStatusButton(allOnline) {
+            function checkAPIStatus(apiName, url) {
+                const startTime = Date.now();
+                
+                return fetch(url, { method: 'GET', mode: 'no-cors' })
+                    .then(() => {
+                        const responseTime = Date.now() - startTime;
+                        state.apiStatus[apiName] = {
+                            status: responseTime > 2000 ? 'slow' : 'online',
+                            responseTime: responseTime
+                        };
+                    })
+                    .catch(() => {
+                        state.apiStatus[apiName] = {
+                            status: 'offline',
+                            responseTime: null
+                        };
+                    });
+            }
+
+            function updateStatusDisplay() {
+                let statusHTML = '';
+                
+                for (const [apiName, status] of Object.entries(state.apiStatus)) {
+                    const displayName = apiName === 'deepseek' ? 'DeepSeek' :
+                                      apiName === 'llama' ? 'Llama 3' :
+                                      apiName === 'gpt4' ? 'GPT-4' : 'TTS';
+                    
+                    statusHTML += `
+                        <div class="status-item">
+                            <div class="status-indicator ${status.status}"></div>
+                            <span>${displayName}: ${status.status === 'offline' ? 'Offline' : 
+                               status.status === 'slow' ? `Slow (${status.responseTime}ms)` : `Online (${status.responseTime}ms)`}</span>
+                        </div>
+                    `;
+                }
+                
+                elements.apiStatusList.innerHTML = statusHTML;
+            }
+
+            function updateStatusButton() {
                 elements.statusBtn.classList.remove('loading');
-                elements.statusBtn.classList.toggle('error', !allOnline);
-                elements.statusBtn.classList.toggle('active', allOnline);
-                elements.statusBtn.textContent = allOnline ? 'All Online' : 'Some Offline';
+                
+                const allOnline = Object.values(state.apiStatus).every(
+                    s => s.status === 'online' || s.status === 'slow'
+                );
+                
+                const anySlow = Object.values(state.apiStatus).some(
+                    s => s.status === 'slow'
+                );
+                
+                if (!allOnline) {
+                    elements.statusBtn.classList.add('error');
+                    elements.statusBtn.textContent = 'Some Offline';
+                } else if (anySlow) {
+                    elements.statusBtn.classList.add('loading');
+                    elements.statusBtn.textContent = 'Some Slow';
+                } else {
+                    elements.statusBtn.classList.add('active');
+                    elements.statusBtn.textContent = 'All Online';
+                }
             }
 
             // Global functions for button actions
@@ -887,16 +943,14 @@
                 elements.audioPlayer.src = url;
                 elements.audioPlayer.play().catch(e => {
                     console.error("Audio playback failed:", e);
-                    // Fallback to opening in new tab if play fails
                     window.open(url, '_blank');
                 });
             };
 
             window.downloadTTS = function(url, filename) {
-                // Create a temporary link to trigger download
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = `${filename || 'tts'}.mp3`;
+                a.download = `${filename}.mp3`;
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
