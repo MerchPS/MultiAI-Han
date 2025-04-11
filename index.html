@@ -25,37 +25,36 @@
             background-color: var(--secondary-color);
             color: var(--dark-color);
             line-height: 1.6;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         header {
             text-align: center;
-            margin-bottom: 30px;
-            padding: 20px 0;
-            border-bottom: 1px solid #e1e1e1;
+            margin-bottom: 20px;
+            padding: 10px 0;
         }
 
         h1 {
             color: var(--primary-color);
-            margin-bottom: 10px;
-        }
-
-        .description {
-            color: #666;
-            max-width: 800px;
-            margin: 0 auto;
+            margin-bottom: 5px;
         }
 
         .ai-selector {
             display: flex;
             justify-content: center;
             gap: 15px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
         }
 
@@ -80,14 +79,22 @@
             color: var(--light-color);
         }
 
+        .chat-wrapper {
+            display: flex;
+            flex: 1;
+            gap: 20px;
+            min-height: 0;
+        }
+
         .chat-container {
             display: flex;
             flex-direction: column;
-            height: 60vh;
+            flex: 1;
             background-color: var(--light-color);
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             overflow: hidden;
+            min-height: 0;
         }
 
         .chat-header {
@@ -222,50 +229,55 @@
             color: white;
         }
 
-        .preview-container {
-            margin-top: 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
+        .preview-panel {
+            width: 45%;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             display: none;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        .preview-panel.active {
+            display: flex;
         }
 
         .preview-header {
+            padding: 15px 20px;
+            background-color: #f5f5f5;
+            border-bottom: 1px solid #ddd;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 15px;
-            background-color: #f5f5f5;
-            border-bottom: 1px solid #ddd;
         }
 
         .preview-title {
             font-weight: bold;
-            font-size: 0.9rem;
         }
 
-        .preview-toggle {
+        .close-preview {
             background: none;
             border: none;
             color: #666;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 1rem;
         }
 
         .preview-content {
-            width: 100%;
-            height: 300px;
+            flex: 1;
             border: none;
         }
 
         @media (max-width: 768px) {
-            .chat-container {
-                height: 70vh;
+            .chat-wrapper {
+                flex-direction: column;
             }
             
-            .ai-selector {
-                flex-direction: column;
-                align-items: center;
+            .preview-panel {
+                width: 100%;
+                height: 300px;
             }
             
             .message {
@@ -278,7 +290,6 @@
     <div class="container">
         <header>
             <h1>Multi-AI Interface</h1>
-            <p class="description">Interact with different AI models including DeepSeek V3, Llama 3, and a general Chatbot API. Get code snippets with preview functionality.</p>
         </header>
 
         <div class="ai-selector">
@@ -287,21 +298,31 @@
             <button class="ai-btn" data-ai="chatbot">Chatbot</button>
         </div>
 
-        <div class="chat-container">
-            <div class="chat-header">
-                <span>AI Conversation</span>
-                <span id="current-ai">DeepSeek V3</span>
-            </div>
-            <div class="chat-messages" id="chat-messages">
-                <div class="message ai-message">
-                    Hello! I'm your AI assistant. Which model would you like to talk to? You can choose between DeepSeek V3, Llama 3, or a general Chatbot.
-                    <div class="message-time">Just now</div>
+        <div class="chat-wrapper">
+            <div class="chat-container">
+                <div class="chat-header">
+                    <span>AI Conversation</span>
+                    <span id="current-ai">DeepSeek V3</span>
+                </div>
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message ai-message">
+                        Hello! I'm your AI assistant. Which model would you like to talk to? You can choose between DeepSeek V3, Llama 3, or a general Chatbot.
+                        <div class="message-time">Just now</div>
+                    </div>
+                </div>
+                <div class="loading" id="loading">AI is thinking...</div>
+                <div class="chat-input">
+                    <textarea id="user-input" placeholder="Type your message here..." rows="1"></textarea>
+                    <button id="send-btn">Send</button>
                 </div>
             </div>
-            <div class="loading" id="loading">AI is thinking...</div>
-            <div class="chat-input">
-                <textarea id="user-input" placeholder="Type your message here..." rows="1"></textarea>
-                <button id="send-btn">Send</button>
+
+            <div class="preview-panel" id="preview-panel">
+                <div class="preview-header">
+                    <span class="preview-title">Live Preview</span>
+                    <button class="close-preview" id="close-preview">×</button>
+                </div>
+                <iframe class="preview-content" id="preview-content"></iframe>
             </div>
         </div>
     </div>
@@ -314,9 +335,14 @@
             const userInput = document.getElementById('user-input');
             const sendBtn = document.getElementById('send-btn');
             const loadingIndicator = document.getElementById('loading');
+            const previewPanel = document.getElementById('preview-panel');
+            const previewContent = document.getElementById('preview-content');
+            const closePreviewBtn = document.getElementById('close-preview');
             
             let currentAI = 'deepseek';
-            let conversationHistory = [];
+            let conversationHistory = [
+                { role: 'assistant', content: "Hello! I'm your AI assistant. Which model would you like to talk to? You can choose between DeepSeek V3, Llama 3, or a general Chatbot." }
+            ];
             
             // Auto-resize textarea
             userInput.addEventListener('input', function() {
@@ -374,13 +400,18 @@
                 }
             });
             
+            // Close preview panel
+            closePreviewBtn.addEventListener('click', function() {
+                previewPanel.classList.remove('active');
+            });
+            
             // Add message to chat UI
             function addMessageToChat(role, content) {
                 const messageDiv = document.createElement('div');
                 messageDiv.classList.add('message');
                 messageDiv.classList.add(role === 'user' ? 'user-message' : 'ai-message');
                 
-                // Process content for code blocks and previews
+                // Process content for code blocks
                 let processedContent = content;
                 
                 // Check for code blocks (marked with ```)
@@ -397,6 +428,16 @@
                 messageDiv.appendChild(timeDiv);
                 
                 chatMessages.appendChild(messageDiv);
+                scrollToBottom();
+                
+                // Add event listeners for any new code blocks
+                setTimeout(() => {
+                    addCodeBlockListeners();
+                }, 100);
+            }
+            
+            // Scroll to bottom of chat
+            function scrollToBottom() {
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             }
             
@@ -430,7 +471,6 @@
             // Create HTML for a code block with copy button
             function createCodeBlock(code, language) {
                 const blockId = 'code-' + Math.random().toString(36).substr(2, 9);
-                const previewId = 'preview-' + Math.random().toString(36).substr(2, 9);
                 
                 let html = `
                     <div class="code-block">
@@ -441,17 +481,10 @@
                         <pre id="${blockId}">${escapeHtml(code)}</pre>
                 `;
                 
-                // If it's HTML code, add preview functionality
+                // If it's HTML code, add preview button
                 if (language.toLowerCase() === 'html') {
                     html += `
-                        <div class="preview-container" id="${previewId}">
-                            <div class="preview-header">
-                                <span class="preview-title">Preview</span>
-                                <button class="preview-toggle" data-preview="${previewId}">Close</button>
-                            </div>
-                            <iframe class="preview-content" srcdoc="${escapeHtml(code)}"></iframe>
-                        </div>
-                        <button class="preview-toggle" data-preview="${previewId}" style="margin-top: 5px; background: none; border: none; color: var(--primary-color); cursor: pointer; font-size: 0.8rem;">Show Preview</button>
+                        <button class="preview-btn" data-code="${blockId}" style="margin-top: 10px; background-color: var(--primary-color); color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Show Live Preview</button>
                     `;
                 }
                 
@@ -472,48 +505,31 @@
             // Call the appropriate AI API
             function callAIAPI(ai, message) {
                 let apiUrl;
-                let requestData;
                 
                 switch(ai) {
                     case 'deepseek':
                         apiUrl = 'https://apis.davidcyriltech.my.id/ai/deepseek-v3?text=' + encodeURIComponent(message);
-                        fetch(apiUrl)
-                            .then(response => response.json())
-                            .then(data => {
-                                handleAIResponse(data.response || data.message || "I couldn't process that request.");
-                            })
-                            .catch(error => {
-                                handleAIResponse("Sorry, there was an error processing your request.");
-                                console.error('Error:', error);
-                            });
                         break;
                         
                     case 'llama':
                         apiUrl = 'https://apis.davidcyriltech.my.id/ai/llama3?text=' + encodeURIComponent(message);
-                        fetch(apiUrl)
-                            .then(response => response.json())
-                            .then(data => {
-                                handleAIResponse(data.response || data.message || "I couldn't process that request.");
-                            })
-                            .catch(error => {
-                                handleAIResponse("Sorry, there was an error processing your request.");
-                                console.error('Error:', error);
-                            });
                         break;
                         
                     case 'chatbot':
                         apiUrl = 'https://apis.davidcyriltech.my.id/ai/chatbot?query=' + encodeURIComponent(message);
-                        fetch(apiUrl)
-                            .then(response => response.json())
-                            .then(data => {
-                                handleAIResponse(data.response || data.message || "I couldn't process that request.");
-                            })
-                            .catch(error => {
-                                handleAIResponse("Sorry, there was an error processing your request.");
-                                console.error('Error:', error);
-                            });
                         break;
                 }
+                
+                fetch(apiUrl)
+                    .then(response => response.json())
+                    .then(data => {
+                        const response = data.response || data.message || "I couldn't process that request.";
+                        handleAIResponse(response);
+                    })
+                    .catch(error => {
+                        handleAIResponse("Sorry, there was an error processing your request.");
+                        console.error('Error:', error);
+                    });
             }
             
             // Handle AI response
@@ -523,14 +539,9 @@
                 
                 // Add to conversation history
                 conversationHistory.push({ role: 'assistant', content: response });
-                
-                // Add event listeners for any new code blocks
-                setTimeout(() => {
-                    addCodeBlockListeners();
-                }, 100);
             }
             
-            // Add event listeners for copy buttons and preview toggles
+            // Add event listeners for copy buttons and preview buttons
             function addCodeBlockListeners() {
                 // Copy buttons
                 document.querySelectorAll('.copy-btn').forEach(button => {
@@ -550,27 +561,16 @@
                     });
                 });
                 
-                // Preview toggles
-                document.querySelectorAll('.preview-toggle').forEach(button => {
+                // Preview buttons
+                document.querySelectorAll('.preview-btn').forEach(button => {
                     button.addEventListener('click', function() {
-                        const previewId = this.dataset.preview;
-                        const previewContainer = document.getElementById(previewId);
+                        const codeId = this.dataset.code;
+                        const codeElement = document.getElementById(codeId);
+                        const codeText = codeElement.textContent;
                         
-                        if (previewContainer.style.display === 'block') {
-                            previewContainer.style.display = 'none';
-                            if (this.classList.contains('preview-toggle')) {
-                                this.textContent = 'Show Preview';
-                            } else {
-                                this.textContent = 'Close';
-                            }
-                        } else {
-                            previewContainer.style.display = 'block';
-                            if (this.classList.contains('preview-toggle')) {
-                                this.textContent = 'Hide Preview';
-                            } else {
-                                this.textContent = 'Close';
-                            }
-                        }
+                        // Show the preview panel with the HTML content
+                        previewContent.srcdoc = codeText;
+                        previewPanel.classList.add('active');
                     });
                 });
             }
