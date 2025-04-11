@@ -26,6 +26,7 @@
             color: var(--dark-color);
             line-height: 1.6;
             height: 100vh;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
         }
@@ -37,12 +38,14 @@
             flex: 1;
             display: flex;
             flex-direction: column;
+            height: 100%;
         }
 
         header {
             text-align: center;
             margin-bottom: 20px;
             padding: 10px 0;
+            flex-shrink: 0;
         }
 
         h1 {
@@ -56,6 +59,7 @@
             gap: 15px;
             margin-bottom: 20px;
             flex-wrap: wrap;
+            flex-shrink: 0;
         }
 
         .ai-btn {
@@ -84,6 +88,7 @@
             flex: 1;
             gap: 20px;
             min-height: 0;
+            height: 100%;
         }
 
         .chat-container {
@@ -95,6 +100,7 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             min-height: 0;
+            height: 100%;
         }
 
         .chat-header {
@@ -105,6 +111,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-shrink: 0;
         }
 
         .chat-messages {
@@ -114,6 +121,7 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
+            min-height: 0;
         }
 
         .message {
@@ -121,6 +129,7 @@
             padding: 12px 15px;
             border-radius: 15px;
             position: relative;
+            flex-shrink: 0;
         }
 
         .user-message {
@@ -148,6 +157,7 @@
             padding: 15px;
             background-color: #f9f9f9;
             border-top: 1px solid #e1e1e1;
+            flex-shrink: 0;
         }
 
         .chat-input textarea {
@@ -182,6 +192,7 @@
             text-align: center;
             padding: 10px;
             color: var(--primary-color);
+            flex-shrink: 0;
         }
 
         .loading.active {
@@ -296,6 +307,7 @@
             <button class="ai-btn active" data-ai="deepseek">DeepSeek V3</button>
             <button class="ai-btn" data-ai="llama">Llama 3</button>
             <button class="ai-btn" data-ai="chatbot">Chatbot</button>
+            <button class="ai-btn" data-ai="gpt4">GPT-4</button>
         </div>
 
         <div class="chat-wrapper">
@@ -306,7 +318,7 @@
                 </div>
                 <div class="chat-messages" id="chat-messages">
                     <div class="message ai-message">
-                        Hello! I'm your AI assistant. Which model would you like to talk to? You can choose between DeepSeek V3, Llama 3, or a general Chatbot.
+                        Hello! I'm your AI assistant. Which model would you like to talk to? You can choose between DeepSeek V3, Llama 3, GPT-4, or a general Chatbot.
                         <div class="message-time">Just now</div>
                     </div>
                 </div>
@@ -341,7 +353,7 @@
             
             let currentAI = 'deepseek';
             let conversationHistory = [
-                { role: 'assistant', content: "Hello! I'm your AI assistant. Which model would you like to talk to? You can choose between DeepSeek V3, Llama 3, or a general Chatbot." }
+                { role: 'assistant', content: "Hello! I'm your AI assistant. Which model would you like to talk to? You can choose between DeepSeek V3, Llama 3, GPT-4, or a general Chatbot." }
             ];
             
             // Auto-resize textarea
@@ -367,6 +379,9 @@
                         case 'chatbot':
                             currentAiDisplay.textContent = 'Chatbot';
                             break;
+                        case 'gpt4':
+                            currentAiDisplay.textContent = 'GPT-4';
+                            break;
                     }
                 });
             });
@@ -387,8 +402,23 @@
                 // Add to conversation history
                 conversationHistory.push({ role: 'user', content: message });
                 
+                // Prepare conversation context
+                const context = prepareConversationContext();
+                
                 // Call appropriate API based on selected AI
-                callAIAPI(currentAI, message);
+                callAIAPI(currentAI, message, context);
+            }
+            
+            // Prepare conversation context for API call
+            function prepareConversationContext() {
+                // Limit the context to last 6 messages to avoid too long prompts
+                const recentMessages = conversationHistory.slice(-6);
+                return recentMessages.map(msg => {
+                    return {
+                        role: msg.role,
+                        content: msg.content
+                    };
+                });
             }
             
             // Event listeners for sending
@@ -503,20 +533,25 @@
             }
             
             // Call the appropriate AI API
-            function callAIAPI(ai, message) {
+            function callAIAPI(ai, message, context) {
                 let apiUrl;
+                let requestData;
                 
                 switch(ai) {
                     case 'deepseek':
-                        apiUrl = 'https://apis.davidcyriltech.my.id/ai/deepseek-v3?text=' + encodeURIComponent(message);
+                        apiUrl = 'https://apis.davidcyriltech.my.id/ai/deepseek-v3?text=' + encodeURIComponent(formatContext(context, message));
                         break;
                         
                     case 'llama':
-                        apiUrl = 'https://apis.davidcyriltech.my.id/ai/llama3?text=' + encodeURIComponent(message);
+                        apiUrl = 'https://apis.davidcyriltech.my.id/ai/llama3?text=' + encodeURIComponent(formatContext(context, message));
                         break;
                         
                     case 'chatbot':
-                        apiUrl = 'https://apis.davidcyriltech.my.id/ai/chatbot?query=' + encodeURIComponent(message);
+                        apiUrl = 'https://apis.davidcyriltech.my.id/ai/chatbot?query=' + encodeURIComponent(formatContext(context, message));
+                        break;
+                        
+                    case 'gpt4':
+                        apiUrl = 'https://apis.davidcyriltech.my.id/ai/gpt4?text=' + encodeURIComponent(formatContext(context, message));
                         break;
                 }
                 
@@ -530,6 +565,20 @@
                         handleAIResponse("Sorry, there was an error processing your request.");
                         console.error('Error:', error);
                     });
+            }
+            
+            // Format conversation context for API call
+            function formatContext(context, newMessage) {
+                // Format the conversation history into a coherent text
+                let formatted = '';
+                
+                context.forEach(msg => {
+                    const speaker = msg.role === 'user' ? 'User' : 'AI';
+                    formatted += `${speaker}: ${msg.content}\n\n`;
+                });
+                
+                formatted += `User: ${newMessage}`;
+                return formatted;
             }
             
             // Handle AI response
