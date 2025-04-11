@@ -6,12 +6,15 @@
     <title>Multi-AI Interface</title>
     <style>
         :root {
-            --primary-color: #4a6bff;
-            --secondary-color: #f5f7ff;
-            --dark-color: #1a1a2e;
-            --light-color: #ffffff;
-            --success-color: #28a745;
-            --error-color: #dc3545;
+            --primary: #4a6bff;
+            --primary-dark: #3a5bef;
+            --secondary: #f5f7ff;
+            --dark: #1a1a2e;
+            --light: #ffffff;
+            --success: #28a745;
+            --error: #dc3545;
+            --warning: #ffc107;
+            --gray: #6c757d;
         }
 
         * {
@@ -22,120 +25,156 @@
         }
 
         body {
-            background-color: var(--secondary-color);
-            color: var(--dark-color);
+            background-color: var(--secondary);
+            color: var(--dark);
             line-height: 1.6;
             height: 100vh;
             overflow: hidden;
-            display: flex;
-            flex-direction: column;
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
-            flex: 1;
+            height: 100%;
             display: flex;
             flex-direction: column;
-            height: 100%;
         }
 
         header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             padding: 10px 0;
-            flex-shrink: 0;
         }
 
         h1 {
-            color: var(--primary-color);
+            color: var(--primary);
             margin-bottom: 5px;
+            font-size: 2rem;
         }
 
         .ai-selector {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-bottom: 20px;
+            gap: 12px;
+            margin-bottom: 15px;
             flex-wrap: wrap;
-            flex-shrink: 0;
         }
 
         .ai-btn {
-            padding: 10px 20px;
-            background-color: var(--light-color);
-            border: 2px solid var(--primary-color);
+            padding: 8px 16px;
+            background-color: var(--light);
+            border: 2px solid var(--primary);
             border-radius: 30px;
-            color: var(--primary-color);
-            font-weight: bold;
+            color: var(--primary);
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s;
+            font-size: 0.9rem;
         }
 
         .ai-btn:hover {
-            background-color: var(--primary-color);
-            color: var(--light-color);
+            background-color: var(--primary);
+            color: var(--light);
         }
 
         .ai-btn.active {
-            background-color: var(--primary-color);
-            color: var(--light-color);
+            background-color: var(--primary);
+            color: var(--light);
+        }
+
+        .status-btn {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            padding: 6px 12px;
+            background-color: var(--light);
+            border: 2px solid var(--gray);
+            border-radius: 30px;
+            color: var(--dark);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-btn::before {
+            content: "";
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--gray);
+        }
+
+        .status-btn.active::before {
+            background-color: var(--success);
+        }
+
+        .status-btn.error::before {
+            background-color: var(--error);
+        }
+
+        .status-btn.loading::before {
+            background-color: var(--warning);
         }
 
         .chat-wrapper {
             display: flex;
             flex: 1;
             gap: 20px;
-            min-height: 0;
-            height: 100%;
+            height: calc(100% - 150px);
         }
 
         .chat-container {
             display: flex;
             flex-direction: column;
             flex: 1;
-            background-color: var(--light-color);
+            background-color: var(--light);
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            min-height: 0;
-            height: 100%;
+            position: relative;
         }
 
         .chat-header {
-            padding: 15px 20px;
-            background-color: var(--primary-color);
-            color: var(--light-color);
-            font-weight: bold;
+            padding: 12px 20px;
+            background-color: var(--primary);
+            color: var(--light);
+            font-weight: 600;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-shrink: 0;
         }
 
         .chat-messages {
             flex: 1;
-            padding: 20px;
+            padding: 15px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            min-height: 0;
+            gap: 12px;
         }
 
         .message {
             max-width: 80%;
-            padding: 12px 15px;
-            border-radius: 15px;
+            padding: 10px 15px;
+            border-radius: 12px;
             position: relative;
-            flex-shrink: 0;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .user-message {
             align-self: flex-end;
-            background-color: var(--primary-color);
-            color: var(--light-color);
+            background-color: var(--primary);
+            color: var(--light);
             border-bottom-right-radius: 5px;
         }
 
@@ -143,6 +182,11 @@
             align-self: flex-start;
             background-color: #f1f1f1;
             border-bottom-left-radius: 5px;
+        }
+
+        .ai-message strong {
+            font-weight: 700;
+            color: var(--dark);
         }
 
         .message-time {
@@ -154,45 +198,49 @@
 
         .chat-input {
             display: flex;
-            padding: 15px;
+            padding: 12px;
             background-color: #f9f9f9;
             border-top: 1px solid #e1e1e1;
-            flex-shrink: 0;
         }
 
         .chat-input textarea {
             flex: 1;
-            padding: 12px 15px;
+            padding: 10px 15px;
             border: 1px solid #ddd;
-            border-radius: 30px;
+            border-radius: 25px;
             resize: none;
             outline: none;
-            font-size: 1rem;
-            max-height: 150px;
+            font-size: 0.95rem;
+            max-height: 120px;
+            transition: border 0.2s;
+        }
+
+        .chat-input textarea:focus {
+            border-color: var(--primary);
         }
 
         .chat-input button {
             margin-left: 10px;
-            padding: 0 20px;
-            background-color: var(--primary-color);
-            color: var(--light-color);
+            padding: 0 18px;
+            background-color: var(--primary);
+            color: var(--light);
             border: none;
-            border-radius: 30px;
+            border-radius: 25px;
             cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.3s ease;
+            font-weight: 600;
+            transition: background-color 0.2s;
         }
 
         .chat-input button:hover {
-            background-color: #3a5bef;
+            background-color: var(--primary-dark);
         }
 
         .loading {
             display: none;
             text-align: center;
-            padding: 10px;
-            color: var(--primary-color);
-            flex-shrink: 0;
+            padding: 8px;
+            color: var(--primary);
+            font-size: 0.9rem;
         }
 
         .loading.active {
@@ -204,8 +252,8 @@
             background-color: #282c34;
             color: #abb2bf;
             border-radius: 8px;
-            padding: 15px;
-            margin: 10px 0;
+            padding: 12px;
+            margin: 8px 0;
             font-family: 'Courier New', Courier, monospace;
             overflow-x: auto;
         }
@@ -214,29 +262,29 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             color: #9da5b4;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .copy-btn {
             background-color: #3a3f4b;
             color: #abb2bf;
             border: none;
-            padding: 5px 10px;
+            padding: 4px 8px;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             transition: all 0.2s;
         }
 
         .copy-btn:hover {
-            background-color: var(--primary-color);
+            background-color: var(--primary);
             color: white;
         }
 
         .copy-btn.copied {
-            background-color: var(--success-color);
+            background-color: var(--success);
             color: white;
         }
 
@@ -248,7 +296,12 @@
             overflow: hidden;
             display: none;
             flex-direction: column;
-            min-height: 0;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
         .preview-panel.active {
@@ -256,7 +309,7 @@
         }
 
         .preview-header {
-            padding: 15px 20px;
+            padding: 12px 15px;
             background-color: #f5f5f5;
             border-bottom: 1px solid #ddd;
             display: flex;
@@ -265,7 +318,8 @@
         }
 
         .preview-title {
-            font-weight: bold;
+            font-weight: 600;
+            font-size: 0.9rem;
         }
 
         .close-preview {
@@ -273,7 +327,12 @@
             border: none;
             color: #666;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 1.1rem;
+            transition: color 0.2s;
+        }
+
+        .close-preview:hover {
+            color: var(--error);
         }
 
         .preview-content {
@@ -281,14 +340,115 @@
             border: none;
         }
 
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 20px;
+            transform: translateY(20px);
+            transition: transform 0.3s;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .modal-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        .modal-section {
+            margin-bottom: 15px;
+        }
+
+        .modal-section h3 {
+            font-size: 1rem;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .modal-section ul {
+            padding-left: 20px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .status-indicator.online {
+            background-color: var(--success);
+        }
+
+        .status-indicator.offline {
+            background-color: var(--error);
+        }
+
+        .status-indicator.slow {
+            background-color: var(--warning);
+        }
+
         @media (max-width: 768px) {
             .chat-wrapper {
                 flex-direction: column;
+                height: calc(100% - 130px);
             }
             
             .preview-panel {
                 width: 100%;
-                height: 300px;
+                height: 250px;
             }
             
             .message {
@@ -302,6 +462,8 @@
         <header>
             <h1>Multi-AI Interface</h1>
         </header>
+
+        <button class="status-btn" id="status-btn">Status: Checking...</button>
 
         <div class="ai-selector">
             <button class="ai-btn active" data-ai="deepseek">DeepSeek V3</button>
@@ -339,8 +501,65 @@
         </div>
     </div>
 
+    <div class="modal" id="welcome-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">✨ Welcome to Multi-AI Interface ✨</h2>
+                <button class="modal-close" id="modal-close">&times;</button>
+            </div>
+            <div class="modal-section">
+                <h3>What's New</h3>
+                <ul>
+                    <li>Added GPT-4 API support</li>
+                    <li>Improved conversation history context</li>
+                    <li>Enhanced code preview functionality</li>
+                    <li>Added API status monitoring</li>
+                </ul>
+            </div>
+            <div class="modal-section">
+                <h3>API Credits</h3>
+                <ul>
+                    <li>DeepSeek V3 API by David Cyril</li>
+                    <li>Llama 3 API by David Cyril</li>
+                    <li>GPT-4 API by David Cyril</li>
+                    <li>Chatbot API by David Cyril</li>
+                </ul>
+            </div>
+            <div class="modal-section">
+                <h3>Created by</h3>
+                <p>This interface was developed by <strong>Hans Yang</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="status-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">API Status</h2>
+                <button class="modal-close" id="status-modal-close">&times;</button>
+            </div>
+            <div class="modal-section">
+                <div id="api-status-list">
+                    <div class="status-item">
+                        <div class="status-indicator loading"></div>
+                        <span>Checking API status...</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-section">
+                <h3>Status Indicators</h3>
+                <ul>
+                    <li><span class="status-indicator online"></span> Online - API working normally</li>
+                    <li><span class="status-indicator offline"></span> Offline - API not responding</li>
+                    <li><span class="status-indicator slow"></span> Slow - High response time</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
             const aiButtons = document.querySelectorAll('.ai-btn');
             const currentAiDisplay = document.getElementById('current-ai');
             const chatMessages = document.getElementById('chat-messages');
@@ -350,11 +569,31 @@
             const previewPanel = document.getElementById('preview-panel');
             const previewContent = document.getElementById('preview-content');
             const closePreviewBtn = document.getElementById('close-preview');
+            const statusBtn = document.getElementById('status-btn');
+            const welcomeModal = document.getElementById('welcome-modal');
+            const statusModal = document.getElementById('status-modal');
+            const modalClose = document.getElementById('modal-close');
+            const statusModalClose = document.getElementById('status-modal-close');
+            const apiStatusList = document.getElementById('api-status-list');
             
+            // State variables
             let currentAI = 'deepseek';
             let conversationHistory = [
                 { role: 'assistant', content: "Hello! I'm your AI assistant. Which model would you like to talk to? You can choose between DeepSeek V3, Llama 3, GPT-4, or a general Chatbot." }
             ];
+            
+            // Show welcome modal on first load
+            setTimeout(() => {
+                welcomeModal.classList.add('active');
+            }, 500);
+            
+            // Modal controls
+            modalClose.addEventListener('click', () => welcomeModal.classList.remove('active'));
+            statusModalClose.addEventListener('click', () => statusModal.classList.remove('active'));
+            statusBtn.addEventListener('click', () => {
+                statusModal.classList.add('active');
+                checkAPIStatus();
+            });
             
             // Auto-resize textarea
             userInput.addEventListener('input', function() {
@@ -390,6 +629,18 @@
             function sendMessage() {
                 const message = userInput.value.trim();
                 if (message === '') return;
+                
+                // Check if asking about creator
+                if (message.toLowerCase().includes('siapa yang buat') || 
+                    message.toLowerCase().includes('who created') ||
+                    message.toLowerCase().includes('pembuat')) {
+                    addMessageToChat('user', message);
+                    userInput.value = '';
+                    setTimeout(() => {
+                        handleAIResponse("Web ini dibuat oleh <strong>Hans Yang</strong>");
+                    }, 500);
+                    return;
+                }
                 
                 // Add user message to chat
                 addMessageToChat('user', message);
@@ -441,13 +692,8 @@
                 messageDiv.classList.add('message');
                 messageDiv.classList.add(role === 'user' ? 'user-message' : 'ai-message');
                 
-                // Process content for code blocks
-                let processedContent = content;
-                
-                // Check for code blocks (marked with ```)
-                if (content.includes('```')) {
-                    processedContent = processCodeBlocks(content);
-                }
+                // Process content for code blocks and bold text
+                let processedContent = formatResponseText(content);
                 
                 messageDiv.innerHTML = processedContent;
                 
@@ -464,6 +710,19 @@
                 setTimeout(() => {
                     addCodeBlockListeners();
                 }, 100);
+            }
+            
+            // Format response text with bold and code blocks
+            function formatResponseText(text) {
+                // Process bold text (**text**)
+                let formatted = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                
+                // Process code blocks (```)
+                if (formatted.includes('```')) {
+                    formatted = processCodeBlocks(formatted);
+                }
+                
+                return formatted;
             }
             
             // Scroll to bottom of chat
@@ -514,7 +773,7 @@
                 // If it's HTML code, add preview button
                 if (language.toLowerCase() === 'html') {
                     html += `
-                        <button class="preview-btn" data-code="${blockId}" style="margin-top: 10px; background-color: var(--primary-color); color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Show Live Preview</button>
+                        <button class="preview-btn" data-code="${blockId}" style="margin-top: 10px; background-color: var(--primary); color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">Show Live Preview</button>
                     `;
                 }
                 
@@ -535,7 +794,6 @@
             // Call the appropriate AI API
             function callAIAPI(ai, message, context) {
                 let apiUrl;
-                let requestData;
                 
                 switch(ai) {
                     case 'deepseek':
@@ -574,7 +832,7 @@
                 
                 context.forEach(msg => {
                     const speaker = msg.role === 'user' ? 'User' : 'AI';
-                    formatted += `${speaker}: ${msg.content}\n\n`;
+                    formatted += `${speaker}: ${msg.content.replace(/\*\*(.*?)\*\*/g, '$1')}\n\n`;
                 });
                 
                 formatted += `User: ${newMessage}`;
@@ -624,8 +882,81 @@
                 });
             }
             
+            // Check API status
+            function checkAPIStatus() {
+                apiStatusList.innerHTML = `
+                    <div class="status-item">
+                        <div class="status-indicator loading"></div>
+                        <span>Checking API status...</span>
+                    </div>
+                `;
+                
+                const apis = [
+                    { name: 'DeepSeek V3', url: 'https://apis.davidcyriltech.my.id/ai/deepseek-v3?text=ping' },
+                    { name: 'Llama 3', url: 'https://apis.davidcyriltech.my.id/ai/llama3?text=ping' },
+                    { name: 'Chatbot', url: 'https://apis.davidcyriltech.my.id/ai/chatbot?query=ping' },
+                    { name: 'GPT-4', url: 'https://apis.davidcyriltech.my.id/ai/gpt4?text=ping' }
+                ];
+                
+                let statusHtml = '';
+                let allOnline = true;
+                let anySlow = false;
+                
+                apis.forEach(api => {
+                    const startTime = Date.now();
+                    fetch(api.url)
+                        .then(response => {
+                            const responseTime = Date.now() - startTime;
+                            const isSlow = responseTime > 2000;
+                            
+                            if (isSlow) anySlow = true;
+                            
+                            statusHtml += `
+                                <div class="status-item">
+                                    <div class="status-indicator ${isSlow ? 'slow' : 'online'}"></div>
+                                    <span>${api.name}: ${isSlow ? 'Slow' : 'Online'} (${responseTime}ms)</span>
+                                </div>
+                            `;
+                            updateStatusList();
+                        })
+                        .catch(error => {
+                            allOnline = false;
+                            statusHtml += `
+                                <div class="status-item">
+                                    <div class="status-indicator offline"></div>
+                                    <span>${api.name}: Offline</span>
+                                </div>
+                            `;
+                            updateStatusList();
+                        });
+                });
+                
+                function updateStatusList() {
+                    apiStatusList.innerHTML = statusHtml;
+                    
+                    // Update status button
+                    if (!allOnline) {
+                        statusBtn.classList.add('error');
+                        statusBtn.classList.remove('loading');
+                        statusBtn.textContent = 'Status: Some APIs offline';
+                    } else if (anySlow) {
+                        statusBtn.classList.remove('error');
+                        statusBtn.classList.add('loading');
+                        statusBtn.textContent = 'Status: Some APIs slow';
+                    } else {
+                        statusBtn.classList.remove('error', 'loading');
+                        statusBtn.classList.add('active');
+                        statusBtn.textContent = 'Status: All APIs online';
+                    }
+                }
+            }
+            
             // Initialize code block listeners for the welcome message
             addCodeBlockListeners();
+            
+            // Initial API status check
+            checkAPIStatus();
+            setInterval(checkAPIStatus, 30000); // Check every 30 seconds
         });
     </script>
 </body>
