@@ -165,6 +165,7 @@
             position: relative;
             animation: fadeIn 0.3s ease;
             font-size: 0.95rem;
+            white-space: pre-wrap;
         }
 
         @keyframes fadeIn {
@@ -308,6 +309,7 @@
             font-family: monospace;
             font-size: 0.9rem;
             overflow-x: auto;
+            white-space: pre;
         }
 
         .code-header {
@@ -664,7 +666,7 @@
                     message.toLowerCase().includes('who created')) {
                     addMessage('user', message);
                     setTimeout(() => {
-                        addMessage('ai', "Web ini dibuat oleh <strong>Hans</strong>");
+                        addMessage('ai', "Web ini dibuat oleh <strong>Hans Yang</strong>");
                     }, 500);
                     elements.userInput.value = '';
                     return;
@@ -707,6 +709,9 @@
                 if (content.includes('```')) {
                     formatted = formatCodeBlocks(content);
                 }
+                
+                // Preserve line breaks and spacing
+                formatted = formatted.replace(/\n/g, '<br>');
                 
                 return formatted;
             }
@@ -757,7 +762,10 @@
                         return res.json();
                     })
                     .then(data => {
-                        const response = data.response || data.message || "No response from AI";
+                        let response = data.response || data.message || "No response from AI";
+                        // Clean up response formatting
+                        response = response.replace(/\n{3,}/g, '\n\n'); // Reduce multiple newlines
+                        response = response.replace(/-\s+/g, '<br>- '); // Format bullet points
                         addMessage('ai', response);
                         elements.loadingIndicator.classList.remove('active');
                     })
